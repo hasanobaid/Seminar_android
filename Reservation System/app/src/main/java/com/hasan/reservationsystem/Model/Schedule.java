@@ -7,11 +7,11 @@ public class Schedule {
     private int scID;
     private int emopID;
     private int clinicID;
-    private Time starttime;
-    private Time endtime;
-    private Date startdate;
-    private Date enddate ;
-    private int slottime;
+    private String starttime;
+    private String endtime;
+    private String startdate;
+    private String enddate ;
+    private int slot;
     private int sat;
     private int sun;
     private int mon;
@@ -20,7 +20,7 @@ public class Schedule {
     private int thu;
     private int fri ;
 
-    public Schedule(int scID, int emopID, int clinicID, Time starttime, Time endtime, Date startdate, Date enddate,
+    public Schedule(int scID, int emopID, int clinicID, String starttime, String endtime, String startdate, String enddate,
                     int slottime, int sat, int sun, int mon, int tue, int wen, int thu, int fri) {
         this.scID = scID;
         this.emopID = emopID;
@@ -29,7 +29,7 @@ public class Schedule {
         this.endtime = endtime;
         this.startdate = startdate;
         this.enddate = enddate;
-        this.slottime = slottime;
+        this.slot = slot;
         this.sat = sat;
         this.sun = sun;
         this.mon = mon;
@@ -66,44 +66,44 @@ public class Schedule {
         this.clinicID = clinicID;
     }
 
-    public Time getStarttime() {
+    public String getStarttime() {
         return starttime;
     }
 
-    public void setStarttime(Time starttime) {
+    public void setStarttime(String starttime) {
         this.starttime = starttime;
     }
 
-    public Time getEndtime() {
+    public String getEndtime() {
         return endtime;
     }
 
-    public void setEndtime(Time endtime) {
+    public void setEndtime(String endtime) {
         this.endtime = endtime;
     }
 
-    public Date getStartdate() {
+    public String getStartdate() {
         return startdate;
     }
 
-    public void setStartdate(Date startdate) {
+    public void setStartdate(String startdate) {
         this.startdate = startdate;
     }
 
-    public Date getEnddate() {
+    public String getEnddate() {
         return enddate;
     }
 
-    public void setEnddate(Date enddate) {
+    public void setEnddate(String enddate) {
         this.enddate = enddate;
     }
 
     public int getSlottime() {
-        return slottime;
+        return slot;
     }
 
-    public void setSlottime(int slottime) {
-        this.slottime = slottime;
+    public void setSlottime(int slot) {
+        this.slot = slot;
     }
 
     public int getSat() {

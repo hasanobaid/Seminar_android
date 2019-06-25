@@ -3,10 +3,10 @@ package com.hasan.reservationsystem;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,7 +26,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -34,20 +33,17 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Appointment extends AppCompatActivity {
+public class update extends AppCompatActivity {
     Spinner clinicname;
     Spinner doctorname;
     Spinner timeing;
     CalendarView cal;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_appointment);
+        setContentView(R.layout.activity_update);
         initial();
         getClinicData();
-        String username = getIntent().getStringExtra("id");
-        Toast.makeText(this, username, Toast.LENGTH_SHORT).show();
     }
 
     private void initial() {
@@ -82,16 +78,16 @@ public class Appointment extends AppCompatActivity {
                 String clinicnames = clinicname.getSelectedItem().toString();
 
                 String url = "http://192.168.1.18/android/doctor/get/get-doctor.php?clinicname=" + clinicnames;
-                if (ContextCompat.checkSelfPermission(Appointment.this,
+                if (ContextCompat.checkSelfPermission(update.this,
                         Manifest.permission.INTERNET)
                         != PackageManager.PERMISSION_GRANTED) {
 
-                    ActivityCompat.requestPermissions(Appointment.this,
+                    ActivityCompat.requestPermissions(update.this,
                             new String[]{Manifest.permission.INTERNET},
                             123);
 
                 } else {
-                    GetDoctor runner = new GetDoctor();
+                 GetDoctor runner = new GetDoctor();
                     runner.execute(url);
                     getSchedule();
 
@@ -113,16 +109,16 @@ public class Appointment extends AppCompatActivity {
                 String clinicnames = clinicname.getSelectedItem().toString();
 
                 String url = "http://192.168.1.18/android/admin/get/get-schedule.php?clinicname=" + clinicnames + "&empname=" + doctornames;
-                if (ContextCompat.checkSelfPermission(Appointment.this,
+                if (ContextCompat.checkSelfPermission(update.this,
                         Manifest.permission.INTERNET)
                         != PackageManager.PERMISSION_GRANTED) {
 
-                    ActivityCompat.requestPermissions(Appointment.this,
+                    ActivityCompat.requestPermissions(update.this,
                             new String[]{Manifest.permission.INTERNET},
                             123);
 
                 } else {
-                    getSchedule runner = new getSchedule();
+             getSchedule runner = new getSchedule();
                     runner.execute(url);
                 }
 
@@ -205,12 +201,14 @@ public class Appointment extends AppCompatActivity {
                 int y = year;
                 int m = month ;
                 int d = dayOfMonth ;
-               String adate = y + "-"+m+"-"+d;
-               date.add(adate);
+                String adate = y + "-"+m+"-"+d;
+                date.add(adate);
             }
         });
+
         String adate = "2019-06-16";
         String username = getIntent().getStringExtra("id");
+        String appID = getIntent().getStringExtra("appID");
 
         String data = URLEncoder.encode("clinicname", "UTF-8")
                 + "=" + URLEncoder.encode(clinicnames, "UTF-8");
@@ -223,6 +221,8 @@ public class Appointment extends AppCompatActivity {
                 + "=" + URLEncoder.encode(slottime, "UTF-8");
         data += "&" + URLEncoder.encode("adate", "UTF-8")
                 + "=" + URLEncoder.encode(adate, "UTF-8");
+        data += "&" + URLEncoder.encode("appID", "UTF-8")
+                + "=" + URLEncoder.encode(appID, "UTF-8");
         String text = "";
         BufferedReader reader = null;
 
@@ -272,9 +272,10 @@ public class Appointment extends AppCompatActivity {
 
     }
 
-    public void send(View view) {
 
-        String restUrl = "http://192.168.1.18/android/appointment/add/add.php";
+    public void update(View view) {
+
+        String restUrl = "http://192.168.1.18/android/appointment/add/update.php";
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.INTERNET)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -353,7 +354,7 @@ public class Appointment extends AppCompatActivity {
             List<String> times = new ArrayList<>();
             Gson gson;
             gson = new Gson();
-            Schedule[] schedules = gson.fromJson(result, Schedule[].class);
+            com.hasan.reservationsystem.Model.Schedule[] schedules = gson.fromJson(result, Schedule[].class);
             int[] slottime = new int[schedules.length];
             for (int i = 0; i < slottime.length; i++) {
                 slottime[i] = schedules[i].getSlottime();
@@ -383,9 +384,8 @@ public class Appointment extends AppCompatActivity {
             int tempStartM = startM;
             int tempEndH = 0;
             int tempEndM = 0;
-            Toast.makeText(Appointment.this, "start" + stH, Toast.LENGTH_SHORT).show();
-         //   tempEndM = tempStartM + slot;
-           // tempEndH = tempStartH;
+            //   tempEndM = tempStartM + slot;
+            // tempEndH = tempStartH;
             for (int i = 0; i < slotnumber; i++) {
                 tempEndM = tempStartM + slot;
                 tempEndH = tempStartH;
@@ -451,10 +451,9 @@ public class Appointment extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            Toast.makeText(Appointment.this, result, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(update.this, result, Toast.LENGTH_SHORT).show();
 
         }
     }
 
 }
-

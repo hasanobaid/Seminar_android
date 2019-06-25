@@ -7,16 +7,18 @@ public class Appointment {
     private int empID;
     private int clinicID;
     private int patientID;
-    private Time slottime;
-    private Date adate;
+    private String slottime;
+    private String adate;
     private int rempID;
+    private String appID ;
 
-    public Appointment(int empID, int clinicID, int patientID, Time slottime, Date adate, int rempID) {
+    public Appointment(int empID, int clinicID, int patientID, String slottime, String adate, int rempID,String appID) {
         this.empID = empID;
         this.clinicID = clinicID;
         this.patientID = patientID;
         this.slottime = slottime;
         this.adate = adate;
+        this.appID =appID;
         this.rempID = rempID;
     }
 
@@ -47,19 +49,19 @@ public class Appointment {
         this.patientID = patientID;
     }
 
-    public Time getSlottime() {
+    public String getSlottime() {
         return slottime;
     }
 
-    public void setSlottime(Time slottime) {
+    public void setSlottime(String slottime) {
         this.slottime = slottime;
     }
 
-    public Date getAdate() {
+    public String getAdate() {
         return adate;
     }
 
-    public void setAdate(Date adate) {
+    public void setAdate(String adate) {
         this.adate = adate;
     }
 
@@ -70,4 +72,6 @@ public class Appointment {
     public void setRempID(int rempID) {
         this.rempID = rempID;
     }
+    public void setAppID(String appID){this.appID=appID;}
+    public String getAppID(){return appID;}
 }
